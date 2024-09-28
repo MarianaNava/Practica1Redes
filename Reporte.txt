@@ -17,7 +17,14 @@ Mensajes enviados del servidor al cliente, con sus posibles contenidos:
 Ejemplo:
 {
     "progreso": "p _ a _ _"
-    "estado": 
+    "estado":"""
+                _____
+                |   |
+                |   O
+                |
+                |
+                |
+                """
     "juego": "en progreso"
     "siguiente_jugador": jugador2
 }
