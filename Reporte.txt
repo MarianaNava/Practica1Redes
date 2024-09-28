@@ -3,3 +3,21 @@ Reporte práctica 1
 Integrantes del equipo:
 - Alexia Rodríguez Miranda
 - Mariana Nava Córdova
+
+Protocolo de comunicación:
+
+Mensajes enviados del servidor al cliente, con sus posibles contenidos:
+{
+    "progreso": La palabra adivinada hasta el momento.
+    "estado": Cadena que representa el estado del ahorcado.
+    "juego": "en progreso"/"terminado" (no sé que tan necesario sea esto)
+    "siguiente_jugador": El jugador con el tiro siguiente.
+}
+
+Ejemplo:
+{
+    "progreso": "p _ a _ _"
+    "estado": 
+    "juego": "en progreso"
+    "siguiente_jugador": jugador2
+}
