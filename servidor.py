@@ -81,6 +81,10 @@ class Servidor:
         """
     ]
 
+    # Lista de jugadores involucrados en la partida actual
+    # TODO: al iniciar sesion hay que agregar a los jugadores a esta lista.
+    jugadores = []
+
     # Pasa la palabra actual a una serie de lineas correspondientes.
     def transforma_a_lineas(self, palabra):
         cadena = ""
@@ -113,13 +117,12 @@ class Servidor:
         for i in apariciones:
             self.progreso_palabra = self.progreso_palabra[: i*2] + letra + self.progreso_palabra[(i*2) + 1:]
 
-
-    #mensaje = dict(progreso = La palabra adivinada hasta el momento.
-    #    estado = estados[errores]
-    #    juego = "en progreso"
-    #    siguiente_jugador = El jugador con el tiro siguiente.)
-
-
+    def jugar(self):
+        juego = "en progreso"
+        #while(True):
+            #if self.errores == 6:
+            #    juego = "finalizado"
+            #    self.jugadores.remove()
 
     # Recepción de mensajes del cliente y actualización de la partida, con manejo de errores.
 

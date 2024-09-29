@@ -27,4 +27,5 @@ Ejemplo:
                 """
     "juego": "en progreso"
     "siguiente_jugador": jugador2
+    "ganador": ""
 }
