@@ -5,7 +5,20 @@ Integrantes del equipo:
 - Mariana Nava Córdova
 
 Protocolo de comunicación:
+Mensajes enviados del cliente al servidor, con sus posible contenidos:
+* Para Registrarse:
+{
+    username: nombre de usuario
+    password: clave de acceso
+}
 
+* Para hacer sign_in:
+{
+    cookie_id: Sería la cookie que regresa el servidor para autenticar al cliente
+}
+
+Para la parte de los socket mientras la sesión del usuario identificado con la ip xxx.xxx.xxx este activa entonces mantendremos
+los registros de los jugadores que inician sesion.
 Mensajes enviados del servidor al cliente, con sus posibles contenidos:
 {
     "progreso": La palabra adivinada hasta el momento.
@@ -17,15 +30,10 @@ Mensajes enviados del servidor al cliente, con sus posibles contenidos:
 Ejemplo:
 {
     "progreso": "p _ a _ _"
-    "estado":"""
-                _____
-                |   |
-                |   O
-                |
-                |
-                |
-                """
+    "estado": 1
     "juego": "en progreso"
     "siguiente_jugador": jugador2
     "ganador": ""
 }
+
+Mantenemos estados del juego asociado al cliente asociad

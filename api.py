@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 import secrets
-from servidor import Servidor
+from servidor import Juego_ahorcado
+from servidor import Jugada_actual
 
 app = FastAPI()
 
@@ -35,10 +36,16 @@ async def sign_in(cookie): #Una vez registrado ya solo necesitamos la cookie par
     for galletita in cookie_jar:
         if cookie == galletita["cookie_id"]:
             username = galletita["username"]
-            Servidor.agrega_jugador(username)
+            juego = Jugada_actual
+            Jugada_actual.agrega_jugador(username)
+            #hacer redirect con estado inicial del juego
+             
+
             return{"message": "Successful loggin"}
-    
-    
+  
     return {"message": "Not Found User"}
+
+@app.get("/jugada")
+async def 
 
 
