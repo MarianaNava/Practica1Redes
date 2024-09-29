@@ -77,13 +77,6 @@ class Juego_ahorcado:
         """
     ]
 
-    # Lista de jugadores involucrados en la partida actual
-    # TODO: al iniciar sesion hay que agregar a los jugadores a esta lista.
-    jugadores = []
-    def agrega_jugador(self,jugador):
-        self.jugadores.append(jugador)
-        
-
     # Pasa la palabra actual a una serie de lineas correspondientes.
     def transforma_a_lineas(self, palabra):
         cadena = ""
@@ -95,7 +88,7 @@ class Juego_ahorcado:
     # seleccionamos una palabra aleatoria del banco de palabras
         self.palabra_actual = self.banco_de_palabras[random.randint(0,len(self.banco_de_palabras)-1)]
         self.errores = 0
-        self.progreso_palabra = self.transforma_a_lineas(self.palabra_actual)
+        self.progreso_palabra = self.transforma_a_lineas(self.palabra_actual) #Es cuantas posiciones tendra nuestra palabra
 
     # Función que regresa una lista con las apariciones de una letra en una cadena.
     def apariciones_letra(self, cadena, letra):
