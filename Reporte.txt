@@ -17,21 +17,37 @@ Mensajes enviados del cliente al servidor, con sus posible contenidos:
     cookie_id: Sería la cookie que regresa el servidor para autenticar al cliente
 }
 
+*Una vez iniciada la jugada:
+Una vez que verificamos al usuario entonces lo redirigimos a la ventana donde se hará un display de la jugada actual
+
+{
+
+}
+
 Para la parte de los socket mientras la sesión del usuario identificado con la ip xxx.xxx.xxx este activa entonces mantendremos
 los registros de los jugadores que inician sesion.
 Mensajes enviados del servidor al cliente, con sus posibles contenidos:
 {
-    "progreso": La palabra adivinada hasta el momento.
-    "estado": Cadena que representa el estado del ahorcado.
-    "juego": "en progreso"/"terminado" (no sé que tan necesario sea esto)
+    "juego": {
+    "jugador1": {
+        "estado": ganador/perdedor/continua,
+        "progreso": La palabra adivinada hasta el momento,
+        "errores": Número que representa la cantidad de errores que lleva,donde los posibles valores van del 0..6.
+    }, 
+    "jugador2": {
+        "estado": ganador/perdedor/continua,
+        "progreso": La palabra adivinada hasta el momento,
+        "errores": Número que representa la cantidad de errores que lleva,donde los posibles valores van del 0..6.
+    }, 
     "siguiente_jugador": El jugador con el tiro siguiente.
+    "estado_partida": finalizada o continua
+    }
 }
 
 Ejemplo:
 {
     "progreso": "p _ a _ _"
-    "estado": 1
-    "juego": "en progreso"
+    "estado": continua
     "siguiente_jugador": jugador2
     "ganador": ""
 }
