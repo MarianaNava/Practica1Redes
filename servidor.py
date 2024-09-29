@@ -84,6 +84,9 @@ class Servidor:
     # Lista de jugadores involucrados en la partida actual
     # TODO: al iniciar sesion hay que agregar a los jugadores a esta lista.
     jugadores = []
+    def agrega_jugador(self,jugador):
+        self.jugadores.append(jugador)
+        
 
     # Pasa la palabra actual a una serie de lineas correspondientes.
     def transforma_a_lineas(self, palabra):
