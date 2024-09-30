@@ -1,6 +1,6 @@
 #from fastapi import FastAPI
 import secrets
-from Practica1Redes.juego_ahorcado import Jugada_actual
+from juego_ahorcado import Jugada_actual
 
 #app = FastAPI()
 
@@ -9,7 +9,7 @@ cookie_jar = []
 #@app.get("/")
 #async def root():
 #    return {"message": "Bienvenido a Ahorcado multijugador!"}
-jugada_actual= Jugada_actual()
+jugada_actual= Jugada_actual().dar_mensaje_inicial()
 
 
 def sign_up(username, password): #Primero registrate para que pueda crear la cookie

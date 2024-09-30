@@ -74,6 +74,8 @@ class Jugada_actual:
     estado_jugador2 = "continua"
     estado_partida = "continua"
 
+    mensaje_inicial = ""
+
     def agrega_jugador(self,jugador):
         self.jugadores.append(jugador)
 
@@ -83,7 +85,7 @@ class Jugada_actual:
     def __init__(self):
         #Hacemos verificaciones de que esten jugando dos personas
         while len(self.jugadores)<2:
-            return {"juego": {
+            self.mensaje_inicial = {"juego": {
                         "jugador1": {
                             "username": "",
                             "estado": "",
@@ -104,7 +106,7 @@ class Jugada_actual:
         self.juego = Juego_ahorcado()
         self.jugador1 = self.jugadores[0]
         self.jugador2 = self.jugadores[1]
-        return {"juego": {
+        self.mensaje_inicial = {"juego": {
                         "jugador1": {
                             "username": self.jugador1,
                             "estado": "continua",
@@ -121,6 +123,10 @@ class Jugada_actual:
                         "estado_partida": "continua"
                         }
                     }
+        
+    def dar_mensaje_inicial(self):
+        return self.mensaje_inicial
+    
     # Actualiza la palabraRegresa la informacion del jugador actualizada
     def jugada(self, letra):
         if self.jugador_turno == 1:
