@@ -76,7 +76,7 @@ def jugada(letra:None, jugador:None):
             return {"message":"Perdida"}
         elif(datos_jugador1["estado"]=="ganador" and datos_jugador2["estado"]=="ganador"):
             return {"message":"Empate"}
-        elif (datos_jugador1["estado"]=="Ganador"):
+        elif (datos_jugador1["estado"]=="ganador"):
             username = datos_jugador1["username"]
             return {"message": "Ganador1", "username":username}
         else :

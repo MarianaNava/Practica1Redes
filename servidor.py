@@ -129,6 +129,8 @@ class Jugada_actual:
     jugadores = []
     jugador_turno:int #Variable que indica que jugador le toca tirar, valores 1,2
 
+    jugador_turno = 1
+
     def agrega_jugador(self,jugador):
         self.jugadores.append(jugador)
 
@@ -177,9 +179,9 @@ class Jugada_actual:
                         }
                     }
     # Actualiza la palabraRegresa la informacion del jugador actualizada
-    def jugada(self, jugador, letra):
+    def jugada(self, letra):
         estado_jugador = "continua"
-        if jugador == self.jugador1:
+        if self.jugador_turno == 1:
             self.juego.actualiza_palabra_jugador1(letra)
             #Si el jugador tiene 6 errores, entonces pierde.
             if self.juego.errores_j1 >= 6:
@@ -187,13 +189,13 @@ class Jugada_actual:
             # Si el jugador tiene menos de 6 errores y ya no hay letras que reemplazar, entonces gana.
             elif self.juego.errores_j1 < 6 and ("_" not in self.juego.progreso_palabra_j1): 
                 estado_jugador = "ganador"
-
-            return {"username": jugador,
+            self.jugador_turno = 2
+            return {"username": self.jugador1,
                     "estado": estado_jugador,
                     "progreso": self.juego.progreso_palabra_j1,
                     "errores": self.juego.errores_j1}
 
-        elif jugador == self.jugador2:
+        elif self.jugador_turno == 2:
             self.juego.actualiza_palabra_jugador2(letra)
             #Si el jugador tiene 6 errores, entonces pierde.
             if self.juego.errores_j2 >= 6:
@@ -201,8 +203,8 @@ class Jugada_actual:
             # Si el jugador tiene menos de 6 errores y ya no hay letras que reemplazar, entonces gana.
             elif self.juego.errores_j2 < 6 and ("_" not in self.juego.progreso_palabra_j2): 
                 estado_jugador = "ganador"
-            
-            return {"username": jugador,
+            self.jugador_turno = 1
+            return {"username": self.jugador2,
                 "estado": estado_jugador,
                 "progreso": self.juego.progreso_palabra_j2,
                 "errores": self.juego.errores_j2}

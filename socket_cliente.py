@@ -118,7 +118,7 @@ def __main__():
         cookie = peticion_sign_up["cookie_id"]
 
     while username_invalid:
-        print("Elige otro usuarname")
+        print("Elige otro username")
         nueva_peticion = socket_sign_up()
         mensaje_cuerpo = nueva_peticion["message"]
         print(mensaje_cuerpo)
