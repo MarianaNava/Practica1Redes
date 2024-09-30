@@ -66,11 +66,11 @@ def jugada_estado(letra= ""):
     # }
     #}
     
-    
-    if jugada_actual["estado_partida"] == "no_disponible":
+    print(jugada_actual)
+    if jugada_actual['juego']["estado_partida"] == "no disponible":
         return {"message": "No_disponible"}
     
-    elif jugada_actual["estado_partida"] == "finalizada":
+    elif jugada_actual['juego']["estado_partida"] == "finalizada":
         datos_jugador1 = jugada_actual["juego"]["jugador1"]
         datos_jugador2 = jugada_actual["juego"]["jugador2"]
 
