@@ -41,7 +41,7 @@ def socket_letra():
     mensajejson = json.dumps(dictmensaje)
     clientSocket.sendto(mensajejson.encode(),(serverName, serverPort)) # encode para pasarlo a una secuencia de bytes
     respuesta, serverAddress = clientSocket.recvfrom(2048)
-    mensaje_respuesta = json.loads(respuesta) #Debe responde algo de tipo {"message": ... , "juego":...}
+    mensaje_respuesta = json.loads(respuesta) #Debe responde algo de tipo {"message": ... , "jugador1":...,"jugador2":..., siguiente_jugador:}
     if mensaje_respuesta["message"]=="Finalizado":
         clientSocket.close()
     return mensaje_respuesta 
@@ -133,17 +133,33 @@ def __main__():
     succesful_sign_in = peticion_sign_in["message"]
     print(succesful_sign_in)
     if succesful_sign_in == "Successful loggin":
-        peticion_a= socket_letra()
-        if peticion_a["message"]=="Jugador 1":
-            jugador1= peticion_a["jugador1"]
-            username1 = jugador1["username"]
-            progreso1 = jugador1["progreso"]
-            errores = jugador1["errores"]
-            colgado = estados_error[errores]
-            print("Hola Jugador 1: "+username1)
-            print("Tu progreso actual es : "+ progreso1)
-            print("Colgado actual"+colgado)
-            pon_letra = socket_letra()
+        continua = True
+        while continua:
+
+            peticion_a= socket_letra()
+            if peticion_a["message"]!="Continua":
+                print(peticion_a["message"])
+                continua=False
+            else:
+                if peticion_a["message"]=="Jugador 1":
+                    jugador1= peticion_a["jugador1"]
+                    username1 = jugador1["username"]
+                    progreso1 = jugador1["progreso"]
+                    errores1 = jugador1["errores"]
+                    colgado1 = estados_error[errores1]
+                    print("Hola Jugador 1: "+username1)
+                    print("Tu progreso actual es : "+ progreso1)
+                    print("Colgado actual"+colgado1)
+                else:
+                    jugador2= peticion_a["jugador2"]
+                    username2 = jugador2["username"]
+                    progreso2 = jugador2["progreso"]
+                    errores2 = jugador2["errores"]
+                    colgado2 = estados_error[errores2]
+                    print("Hola Jugador 2: "+username2)
+                    print("Tu progreso actual es : "+ progreso2)
+                    print("Colgado actual"+colgado2)
+
 
             
 
