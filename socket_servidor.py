@@ -58,11 +58,18 @@ while True:
 
         elif mensaje == "Ganador1":
             username = partido["username"]
-            respuesta = dict("Gano el usuario:" + username)
+            respuesta = dict(message = "Gano el usuario:" + username)
+            serverSocket.sendto(json.dumps(respuesta).encode(), clientAddress)
 
         elif mensaje == "Ganador2":
             username = partido["username"]
-            respuesta = dict("Gano el usuario:" + username)
+            respuesta = dict(message ="Gano el usuario:" + username)
+            serverSocket.sendto(json.dumps(respuesta).encode(), clientAddress)
+
+        else: #No disponible
+            respuesta = dict(message = "No suficientes usuarios :( ")
+            serverSocket.sendto(json.dumps(respuesta).encode(), clientAddress)
+
 
 
 
