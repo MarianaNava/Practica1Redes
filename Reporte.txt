@@ -73,3 +73,6 @@ Ejemplo:
     "estado_partida": "continua"
     }
 }
+
+Intentamos mantener la persistencia de la partida manejandolá como una variable global, esto para no incializarla multiples veces.
+Manteniendo el estado logico de la jugada.

@@ -4,8 +4,10 @@ import json
 serverName = 'localhost' # 127.0.0.1 (referencia a mi misma maquina)
 serverPort = 12000
 clientSocket = socket(AF_INET, SOCK_DGRAM) # SOCK_DGRAM para decir que vamos a usar UDP
+print("hello")
 
-def socket_sign_up():
+def socket_sign_up(clientSocket):
+
     username = input('Introduce tu username: ')
     password = input('Introduce tu contraseña: ')
     dictmensaje = dict(username=username,password=password,tipo=0)
@@ -17,7 +19,7 @@ def socket_sign_up():
     return mensaje_respuesta 
 
 
-def socket_sign_in(cookie):
+def socket_sign_in(ClientSocket,cookie):
     dictmensaje = dict(cookie= cookie,tipo=1)
     mensajejson = json.dumps(dictmensaje)
     clientSocket.sendto(mensajejson.encode(),(serverName, serverPort)) # encode para pasarlo a una secuencia de bytes
@@ -35,7 +37,7 @@ def socket_sign_in(cookie):
 #    clientSocket.close()
 #    return mensaje_respuesta 
 
-def socket_letra():
+def socket_letra(ClientSocket):
     letra = input('Dame una letra: ')
     dictmensaje = dict(letra= letra,tipo=2)
     mensajejson = json.dumps(dictmensaje)
@@ -47,7 +49,8 @@ def socket_letra():
     return mensaje_respuesta 
 
 
-def __main__():
+if __name__== '__main__':
+    print("entra main")
     estados_error = [
         """
         _____
@@ -106,7 +109,7 @@ def __main__():
         |
         """ 
     ]
-    peticion_sign_up = socket_sign_up()
+    peticion_sign_up = socket_sign_up(clientSocket)
     mensaje_cuerpo = peticion_sign_up["message"]
     print(mensaje_cuerpo)
     username_invalid:bool

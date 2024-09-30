@@ -3,6 +3,7 @@ import json
 from api import *
 serverPort = 12000
 serverSocket = socket(AF_INET, SOCK_DGRAM)
+print("1")
 serverSocket.bind(('', serverPort)) # '' toma como default el localhost
 print('El servidor está listo')
 lista_clientes = []
