@@ -15,7 +15,6 @@ def socket_sign_up(clientSocket):
     clientSocket.sendto(mensajejson.encode(),(serverName, serverPort)) # encode para pasarlo a una secuencia de bytes
     respuesta, serverAddress = clientSocket.recvfrom(2048)
     mensaje_respuesta = json.loads(respuesta) #Debe responde algo de tipo {"message": ... , "cookie":...}
-    
     return mensaje_respuesta 
 
 
@@ -25,7 +24,6 @@ def socket_sign_in(ClientSocket,cookie):
     clientSocket.sendto(mensajejson.encode(),(serverName, serverPort)) # encode para pasarlo a una secuencia de bytes
     respuesta, serverAddress = clientSocket.recvfrom(2048)
     mensaje_respuesta = json.loads(respuesta) #Debe responde algo de tipo {"message": ... }
-    clientSocket.close()
     return mensaje_respuesta 
 
 #def socket_ahorcado_inicial():
@@ -44,8 +42,8 @@ def socket_letra(ClientSocket):
     clientSocket.sendto(mensajejson.encode(),(serverName, serverPort)) # encode para pasarlo a una secuencia de bytes
     respuesta, serverAddress = clientSocket.recvfrom(2048)
     mensaje_respuesta = json.loads(respuesta) #Debe responde algo de tipo {"message": ... , "jugador1":...,"jugador2":..., siguiente_jugador:}
-    if mensaje_respuesta["message"]=="Finalizado":
-        clientSocket.close()
+    #if mensaje_respuesta["message"]=="Finalizado":
+    #    clientSocket.close()
     return mensaje_respuesta 
 
 
@@ -139,6 +137,7 @@ def __main__():
         while continua:
 
             peticion_a= socket_letra()
+            print(peticion_a)
             if peticion_a["message"]!="Continua":
                 print(peticion_a["message"])
                 continua=False
