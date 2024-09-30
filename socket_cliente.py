@@ -15,7 +15,7 @@ def socket_sign_up(clientSocket):
     clientSocket.sendto(mensajejson.encode(),(serverName, serverPort)) # encode para pasarlo a una secuencia de bytes
     respuesta, serverAddress = clientSocket.recvfrom(2048)
     mensaje_respuesta = json.loads(respuesta) #Debe responde algo de tipo {"message": ... , "cookie":...}
-    clientSocket.close()
+    
     return mensaje_respuesta 
 
 
@@ -49,8 +49,7 @@ def socket_letra(ClientSocket):
     return mensaje_respuesta 
 
 
-if __name__== '__main__':
-    print("entra main")
+def __main__():
     estados_error = [
         """
         _____
@@ -119,7 +118,7 @@ if __name__== '__main__':
         username_invalid = True
     else:
         username_invalid = False
-        cookie = peticion_sign_up["cookie_id"]
+        cookie = peticion_sign_up["cookie"]
 
     while username_invalid:
         print("Elige otro username")
@@ -128,7 +127,7 @@ if __name__== '__main__':
         print(mensaje_cuerpo)
         if mensaje_cuerpo == "User registered successfully":
             username_invalid = False
-            cookie = nueva_peticion["cookie_id"]
+            cookie = nueva_peticion["cookie"]
 
     #para este punto ya debe esta asignada la cookie 
 

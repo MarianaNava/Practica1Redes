@@ -84,7 +84,7 @@ class Jugada_actual:
 
     def __init__(self):
         #Hacemos verificaciones de que esten jugando dos personas
-        while len(self.jugadores)<2:
+        if len(self.jugadores)<2:
             self.mensaje_inicial = {"juego": {
                         "jugador1": {
                             "username": "",
@@ -102,27 +102,27 @@ class Jugada_actual:
                         "estado_partida": "no disponible"
                         }
                     }
-        
-        self.juego = Juego_ahorcado()
-        self.jugador1 = self.jugadores[0]
-        self.jugador2 = self.jugadores[1]
-        self.mensaje_inicial = {"juego": {
-                        "jugador1": {
-                            "username": self.jugador1,
-                            "estado": "continua",
-                            "progreso": self.juego.progreso_palabra_j1,
-                            "errores": 0
-                        }, 
-                        "jugador2": {
-                            "username": self.jugador2,
-                            "estado": "continua",
-                            "progreso": self.juego.progreso_palabra_j2,
-                            "errores": 0
-                        }, 
-                        "siguiente_jugador": self.jugador1,
-                        "estado_partida": "continua"
+        else:
+            self.juego = Juego_ahorcado()
+            self.jugador1 = self.jugadores[0]
+            self.jugador2 = self.jugadores[1]
+            self.mensaje_inicial = {"juego": {
+                            "jugador1": {
+                                "username": self.jugador1,
+                                "estado": "continua",
+                                "progreso": self.juego.progreso_palabra_j1,
+                                "errores": 0
+                            }, 
+                            "jugador2": {
+                                "username": self.jugador2,
+                                "estado": "continua",
+                                "progreso": self.juego.progreso_palabra_j2,
+                                "errores": 0
+                            }, 
+                            "siguiente_jugador": self.jugador1,
+                            "estado_partida": "continua"
+                            }
                         }
-                    }
         
     def dar_mensaje_inicial(self):
         return self.mensaje_inicial
