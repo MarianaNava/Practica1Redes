@@ -1,7 +1,6 @@
 #from fastapi import FastAPI
 import secrets
-from servidor import Juego_ahorcado
-from servidor import Jugada_actual
+from Practica1Redes.juego_ahorcado import Jugada_actual
 
 #app = FastAPI()
 
@@ -44,7 +43,7 @@ def sign_in(cookie): #Una vez registrado ya solo necesitamos la cookie para sabe
     return {"message": "Not Found User"}
 
 #@app.get("/jugada")
-def jugada(letra:None, jugador:None):
+def jugada(letra:None):
     #Estado posible para el mensaje de regreso:
     #{
     # "juego": {
@@ -82,13 +81,10 @@ def jugada(letra:None, jugador:None):
         else :
             username = datos_jugador2["username"]
             return {"message": "Ganador2", "username":username}
+        
     else: #la partida continua 
         return {"message":"Continua","jugador1": datos_jugador1,"jugador2": datos_jugador2}
     
-
-
-
-
-        return{}
+    
 
 

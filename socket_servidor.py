@@ -42,6 +42,9 @@ while True:
                 mensaje = "Jugador 2"
                 respuesta = dict(message= mensaje,jugador1= jugador1,jugador2= jugador2)
                 serverSocket.sendto(json.dumps(respuesta).encode(), clientAddress)
+                
+
+
 
 
 
