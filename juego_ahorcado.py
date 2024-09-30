@@ -2,6 +2,7 @@ from socket import *
 import json
 import random
 
+
 class Juego_ahorcado:
 
     # Lógica del juego Ahorcado.
@@ -32,6 +33,16 @@ class Juego_ahorcado:
         self.errores_j2 = 0
         self.progreso_palabra_j1 = self.transforma_a_lineas(self.palabra_actual) #Es cuantas posiciones tendra nuestra palabra
         self.progreso_palabra_j2 = self.transforma_a_lineas(self.palabra_actual)
+
+    def set_juego(self, palabra, errores_j1,errores_j2,progreso_palabra_j1,progreso_palabra_j2):
+        self.palabra_actual = palabra
+        self.errores_j1 = errores_j1
+        self.errores_j2 = errores_j2
+        self.progreso_palabra_j1 = progreso_palabra_j1
+        self.progreso_palabra_j2 = progreso_palabra_j2
+
+    def secreto(self):
+        return self.palabra_actual
 
     # Función que regresa una lista con las apariciones de una letra en una cadena.
     def apariciones_letra(self, cadena, letra):
@@ -64,6 +75,8 @@ class Juego_ahorcado:
             self.progreso_palabra_j2 = self.progreso_palabra_j2[: i*2] + letra + self.progreso_palabra_j2[(i*2) + 1:]
 
 
+
+
 class Jugada_actual:
     # Lista de jugadores involucrados en la partida actual
     jugadores = []
@@ -75,6 +88,24 @@ class Jugada_actual:
     estado_partida = "continua"
 
     mensaje_inicial = ""
+            
+    def sobreescribir_juego(self, data_game:dict):
+        juego = data_game["juego"]
+        jugador1 = juego["jugador1"]
+        progreso1 = jugador1["progreso"]
+        errores1 = jugador1["errores"]
+        jugador2 = juego["jugador2"]
+        progreso2 = jugador2["progreso"]
+        errores2 = jugador2["errores"]
+
+        palabra = juego["secreto"]
+        modificar = Juego_ahorcado()
+        recupera_estado = modificar.set_juego(palabra,errores1,errores2, progreso1, progreso2)
+
+        self.jugador_turno = juego["siguiente_jugador"]
+        self.estado_jugador1 = jugador1["estado"]
+        self.estado_jugador2 = jugador2["estado"]
+        self.estado_partida = juego["estado_partida"]
 
     def agrega_jugador(self,jugador):
         self.jugadores.append(jugador)
@@ -102,6 +133,9 @@ class Jugada_actual:
                         "estado_partida": "no disponible"
                         }
                     }
+            self.mensaje_inicial["secreto"]= ""
+            self.guarda_estado(self.mensaje_inicial)
+            
         else:
             self.juego = Juego_ahorcado()
             self.jugador1 = self.jugadores[0]
@@ -123,6 +157,8 @@ class Jugada_actual:
                             "estado_partida": "continua"
                             }
                         }
+            self.mensaje_inicial["secreto"]= self.juego.secreto()
+            self.guarda_estado(self.mensaje_inicial)
         
     def dar_mensaje_inicial(self):
         return self.mensaje_inicial
@@ -152,7 +188,7 @@ class Jugada_actual:
         if((self.estado_jugador1 == "perdedor") and (self.estado_jugador2 == "perdedor")) or (self.estado_jugador1 == "ganador") or (self.estado_jugador2 == "ganador"):
             self.estado_partida = "finalizada"
 
-        return {"juego": {
+        estado_juego = {"juego": {
                         "jugador1": {
                             "username": self.jugador1,
                             "estado": self.estado_jugador1,
@@ -169,6 +205,8 @@ class Jugada_actual:
                         "estado_partida": self.estado_partida
                         }
                     }
+        self.guarda_estado(estado_juego) #Se esta sobreescribiendo constantemente para guardar la solución actual
+        return estado_juego
 
             
             

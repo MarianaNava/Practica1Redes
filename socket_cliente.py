@@ -6,7 +6,7 @@ serverPort = 12000
 clientSocket = socket(AF_INET, SOCK_DGRAM) # SOCK_DGRAM para decir que vamos a usar UDP
 print("hello")
 
-def socket_sign_up(clientSocket):
+def socket_sign_up():
 
     username = input('Introduce tu username: ')
     password = input('Introduce tu contraseña: ')
@@ -18,7 +18,7 @@ def socket_sign_up(clientSocket):
     return mensaje_respuesta 
 
 
-def socket_sign_in(ClientSocket,cookie):
+def socket_sign_in(cookie):
     dictmensaje = dict(cookie= cookie,tipo=1)
     mensajejson = json.dumps(dictmensaje)
     clientSocket.sendto(mensajejson.encode(),(serverName, serverPort)) # encode para pasarlo a una secuencia de bytes
@@ -35,19 +35,19 @@ def socket_sign_in(ClientSocket,cookie):
 #    clientSocket.close()
 #    return mensaje_respuesta 
 
-def socket_letra(ClientSocket):
+def socket_letra():
     letra = input('Dame una letra: ')
     dictmensaje = dict(letra= letra,tipo=2)
     mensajejson = json.dumps(dictmensaje)
     clientSocket.sendto(mensajejson.encode(),(serverName, serverPort)) # encode para pasarlo a una secuencia de bytes
     respuesta, serverAddress = clientSocket.recvfrom(2048)
     mensaje_respuesta = json.loads(respuesta) #Debe responde algo de tipo {"message": ... , "jugador1":...,"jugador2":..., siguiente_jugador:}
-    #if mensaje_respuesta["message"]=="Finalizado":
-    #    clientSocket.close()
+    if mensaje_respuesta["message"]=="Finalizado":
+        clientSocket.close()
     return mensaje_respuesta 
 
 
-def __main__():
+if __name__== '__main__':
     estados_error = [
         """
         _____
@@ -106,7 +106,7 @@ def __main__():
         |
         """ 
     ]
-    peticion_sign_up = socket_sign_up(clientSocket)
+    peticion_sign_up = socket_sign_up()
     mensaje_cuerpo = peticion_sign_up["message"]
     print(mensaje_cuerpo)
     username_invalid:bool
@@ -120,7 +120,7 @@ def __main__():
 
     while username_invalid:
         print("Elige otro username")
-        nueva_peticion = socket_sign_up()
+        nueva_peticion = socket_sign_up(cookie)
         mensaje_cuerpo = nueva_peticion["message"]
         print(mensaje_cuerpo)
         if mensaje_cuerpo == "User registered successfully":
@@ -164,6 +164,8 @@ def __main__():
                     print("Hola Jugador 2: "+username2)
                     print("Tu progreso actual es : "+ progreso2)
                     print("Colgado actual"+colgado2)
+
+    
 
 
             
