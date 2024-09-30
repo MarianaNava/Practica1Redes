@@ -17,66 +17,6 @@ class Juego_ahorcado:
                         "pimienta", "cebra", "bolsa", "cafetera", "vela", "canguro", "fuego",
                         "muelle", "cereza", "taller", "cascada", "lupa", "trompeta", "cactus",
                         "cuadro", "sombra", "pelo", "cena", "bote", "lago", "cuna"]
-
-    estados = [
-        """
-        _____
-        |   |
-        |
-        |
-        |
-        |
-        """,
-        """
-        _____
-        |   |
-        |   O
-        |
-        |
-        |
-        """,
-        """
-        _____
-        |   |
-        |   O
-        |   |
-        |
-        |
-        """,
-        """
-        _____
-        |   |
-        |   O
-        |  /|
-        |
-        |
-        """,
-        """
-        _____
-        |   |
-        |   O
-        |  /|\\
-        |
-        |
-        """,
-        """
-        _____
-        |   |
-        |   O
-        |  /|\\
-        |  /
-        |
-        """,
-        """
-        _____
-        |   |
-        |   O
-        |  /|\\
-        |  / \\
-        |
-        """
-    ]
-
     
     # Pasa la palabra actual a una serie de lineas correspondientes.
     def transforma_a_lineas(self, palabra):
@@ -183,34 +123,46 @@ class Jugada_actual:
                     }
     # Actualiza la palabraRegresa la informacion del jugador actualizada
     def jugada(self, letra):
-        estado_jugador = "continua"
         if self.jugador_turno == 1:
             self.juego.actualiza_palabra_jugador1(letra)
             #Si el jugador tiene 6 errores, entonces pierde.
             if self.juego.errores_j1 >= 6:
-                estado_jugador = "perdedor"
+                self.estado_jugador1 = "perdedor"
             # Si el jugador tiene menos de 6 errores y ya no hay letras que reemplazar, entonces gana.
             elif self.juego.errores_j1 < 6 and ("_" not in self.juego.progreso_palabra_j1): 
-                estado_jugador = "ganador"
+                self.estado_jugador1 = "ganador"
             self.jugador_turno = 2
-            return {"username": self.jugador1,
-                    "estado": estado_jugador,
-                    "progreso": self.juego.progreso_palabra_j1,
-                    "errores": self.juego.errores_j1}
 
         elif self.jugador_turno == 2:
             self.juego.actualiza_palabra_jugador2(letra)
             #Si el jugador tiene 6 errores, entonces pierde.
             if self.juego.errores_j2 >= 6:
-                estado_jugador = "perdedor"
+                self.estado_jugador2 = "perdedor"
             # Si el jugador tiene menos de 6 errores y ya no hay letras que reemplazar, entonces gana.
             elif self.juego.errores_j2 < 6 and ("_" not in self.juego.progreso_palabra_j2): 
-                estado_jugador = "ganador"
+                self.estado_jugador2 = "ganador"
             self.jugador_turno = 1
-            return {"username": self.jugador2,
-                "estado": estado_jugador,
-                "progreso": self.juego.progreso_palabra_j2,
-                "errores": self.juego.errores_j2}
+
+        if((self.estado_jugador1 == "perdedor") and (self.estado_jugador2 == "perdedor")) or (self.estado_jugador1 == "ganador") or (self.estado_jugador2 == "ganador"):
+            self.estado_partida = "finalizada"
+
+        return {"juego": {
+                        "jugador1": {
+                            "username": self.jugador1,
+                            "estado": self.estado_jugador1,
+                            "progreso": self.juego.progreso_palabra_j1,
+                            "errores": self.juego.errores_j1
+                            }, 
+                        "jugador2": {
+                            "username": self.jugador2,
+                            "estado": self.estado_jugador2,
+                            "progreso": self.juego.progreso_palabra_j2,
+                            "errores": self.juego.errores_j2
+                            }, 
+                        "siguiente_jugador": self.jugador_turno,
+                        "estado_partida": self.estado_partida
+                        }
+                    }
 
             
             

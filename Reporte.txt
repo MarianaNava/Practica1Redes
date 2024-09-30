@@ -10,18 +10,26 @@ Mensajes enviados del cliente al servidor, con sus posible contenidos:
 {
     username: nombre de usuario
     password: clave de acceso
+    tipo: 0 Indica que el mensaje es para registrarse
 }
 
 * Para hacer sign_in:
 {
     cookie_id: Sería la cookie que regresa el servidor para autenticar al cliente
+    tipo: 1 Indica que el mensaje es para hacer sign in
 }
 
 *Una vez iniciada la jugada:
-Una vez que verificamos al usuario entonces lo redirigimos a la ventana donde se hará un display de la jugada actual
+Una vez que verificamos al usuario entonces se hará un display de la jugada actual.
 
 {
+    tipo: 2 Indica que el mensaje es para iniciar una nueva partida
+}
 
+*Para hacer una jugada:
+{
+    movimiento: Letra que el usuario quiere probar en la palabra
+    tipo: 3 Indica que el mensaje es para ver si la letra del movimiento se encuentra en la palabra
 }
 
 Para la parte de los socket mientras la sesión del usuario identificado con la ip xxx.xxx.xxx este activa entonces mantendremos
@@ -65,5 +73,3 @@ Ejemplo:
     "estado_partida": "continua"
     }
 }
-
-Mantenemos estados del juego asociado al cliente asociad
