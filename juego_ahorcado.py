@@ -87,8 +87,15 @@ class Jugada_actual:
     estado_jugador2 = "continua"
     estado_partida = "continua"
 
+    #partida_estado_actual:dict
+
     mensaje_inicial = ""
-            
+
+    #Función que guarda el estado actual de la partida, donde esta se describe en forma de diccionario
+    def guarda_estado(self, estado_actual):
+        with open("solucion.txt", "w") as myfile:
+            myfile.write(str(estado_actual))
+
     def sobreescribir_juego(self, data_game:dict):
         juego = data_game["juego"]
         jugador1 = juego["jugador1"]
@@ -98,7 +105,7 @@ class Jugada_actual:
         progreso2 = jugador2["progreso"]
         errores2 = jugador2["errores"]
 
-        palabra = juego["secreto"]
+        palabra = data_game["secreto"]
         modificar = Juego_ahorcado()
         recupera_estado = modificar.set_juego(palabra,errores1,errores2, progreso1, progreso2)
 
@@ -135,7 +142,6 @@ class Jugada_actual:
                     }
             self.mensaje_inicial["secreto"]= ""
             self.guarda_estado(self.mensaje_inicial)
-            
         else:
             self.juego = Juego_ahorcado()
             self.jugador1 = self.jugadores[0]
@@ -163,7 +169,7 @@ class Jugada_actual:
     def dar_mensaje_inicial(self):
         return self.mensaje_inicial
     
-    # Actualiza la palabraRegresa la informacion del jugador actualizada
+    # Actualiza la palabra. Regresa la informacion del jugador actualizada
     def jugada(self, letra):
         if self.jugador_turno == 1:
             self.juego.actualiza_palabra_jugador1(letra)

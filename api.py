@@ -11,8 +11,6 @@ cookie_jar = []
 #async def root():
 #    return {"message": "Bienvenido a Ahorcado multijugador!"}
 
-
-
 def sign_up(username, password): #Primero registrate para que pueda crear la cookie
     user = users.get(username)
     if user:
@@ -45,39 +43,18 @@ def sign_in(cookie): #Una vez registrado ya solo necesitamos la cookie para sabe
   
     return {"message": "Not Found User"}
 
-#Función que guarda el estado actual de la partida, donde esta se describe en forma de diccionario
-def guarda_estado(estado_actual):
-    with open("solucion.txt", "w") as myfile:
-        myfile.write(estado_actual)
 #Función que dado un estado que leerá del archivo solucion.txt realiza una nueva instancia del juego
 def lee_juego_actual():
     with open("solucion.txt", "r") as myfile:
         estado = myfile.read()
         estado = ast.literal_eval(estado)
+    return estado
 
 def jugada_estado(letra= ""):
-    #Estado posible para el mensaje de regreso:
-    #{
-    # "juego": {
-    # "jugador1": {
-    #   "username": username
-    #   "estado": ganador/perdedor/continua,
-    #   "progreso": La palabra adivinada hasta el momento,
-    #   "errores": Número que representa la cantidad de errores que lleva,donde los posibles valores van del 0..6.
-    # }, 
-    # "jugador2": {
-    #   "username": username
-    #   "estado": ganador/perdedor/continua,
-    #   "progreso": La palabra adivinada hasta el momento,
-    #   "errores": Número que representa la cantidad de errores que lleva,donde los posibles valores van del 0..6.
-    # }, 
-    # "siguiente_jugador": El jugador con el tiro siguiente.
-    # "estado_partida": finalizada, continua, no_disponible
-    # }
-    #}
-    instance_jugada_actual= Jugada_actual()#se guarda el mensaje inicial()
+    instance_jugada_actual= Jugada_actual() #se guarda el mensaje inicial()
     jugada_actual = lee_juego_actual()
     instance_jugada_actual.sobreescribir_juego(jugada_actual)
+    print(jugada_actual)
     if jugada_actual['juego']["estado_partida"] == "no disponible":
         return {"message": "No_disponible"}
     
@@ -99,10 +76,9 @@ def jugada_estado(letra= ""):
     else: #la partida continua ie. jugada_actual["estado_partida"]=="continua"
         #Si tenemos una accion a realizar, la realizamos 
         if len(letra)>0:
-
-            jugada = jugada_actual.jugada(letra)
-            juego_actual = jugada["juego"] #siempre nos regresan algo de tipo juego con el estado del juego actual, turno siguiente y los valores de los jugadores
-        return {"message":"Continua","juego": juego_actual}
+            jugada = instance_jugada_actual.jugada(letra)
+        #siempre nos regresan algo de tipo juego con el estado del juego actual, turno siguiente y los valores de los jugadores
+        return {"message":"Continua","juego": jugada["juego"]}
     
 
     

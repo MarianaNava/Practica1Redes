@@ -36,7 +36,7 @@ while True:
             partido_juego = partido["juego"]
             jugador1 = partido_juego["jugador1"]
             jugador2 = partido_juego["jugador2"]
-            siguiente_jugador = partido["siguiente_jugador"]
+            siguiente_jugador = partido_juego["siguiente_jugador"]
             for i in range(2):
                 clientAddress = lista_clientes[i] #Quien primero hizo log in esta agregado en la lista de clientes y a su vez se agrega primero a la lista de jugadores
 
