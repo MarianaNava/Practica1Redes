@@ -131,11 +131,15 @@ if __name__ == '__main__':
     succesful_sign_in = peticion_sign_in["message"]
     print(succesful_sign_in)
     if succesful_sign_in == "Successful loggin":
+        peticion_a = socket_letra()
+        if peticion_a["message"] == "No suficientes usuarios :( ":
+            no_suficientes_usuarios = True
+            while no_suficientes_usuarios:
+                peticion_a = socket_letra()
+                if peticion_a["message"]=="Continua":
+                    no_suficientes_usuarios = False
         continua = True
         while continua:
-
-            peticion_a= socket_letra()
-            print(peticion_a)
             if peticion_a["message"]!="Continua":
                 print(peticion_a["message"])
                 continua=False
