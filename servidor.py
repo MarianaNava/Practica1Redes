@@ -127,6 +127,7 @@ class Juego_ahorcado:
 class Jugada_actual:
     # Lista de jugadores involucrados en la partida actual
     jugadores = []
+    jugador_turno:int #Variable que indica que jugador le toca tirar, valores 1,2
 
     def agrega_jugador(self,jugador):
         self.jugadores.append(jugador)
