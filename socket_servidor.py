@@ -17,14 +17,14 @@ while True:
     if tipo_request == 0: #Es sign up
         username = paquete["username"]
         password = paquete["password"]
-        sign_up = sign_up(username, password) #regresar un mensaje de sign_up 
+        instance = sign_up(username, password) #regresar un mensaje de sign_up 
 
-        respuesta = dict(message = sign_up.get('message'), cookie = sign_up.get('cookie_id')) 
+        respuesta = dict(message = instance.get('message'), cookie = instance.get('cookie_id')) 
         serverSocket.sendto(json.dumps(respuesta).encode(),clientAddress)
     elif tipo_request == 1: #Es sign_in
         cookie = paquete["cookie"]
-        sign_in = sign_in(cookie)
-        respuesta = dict(message = sign_in.get('message'))
+        instance = sign_in(cookie)
+        respuesta = dict(message = instance.get('message'))
         serverSocket.sendto(json.dumps(respuesta).encode(),clientAddress)
         lista_clientes.append(clientAddress)
     elif tipo_request == 2: 
