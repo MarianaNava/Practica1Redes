@@ -91,7 +91,7 @@ class Juego_ahorcado:
         self.errores_j1 = 0
         self.errores_j2 = 0
         self.progreso_palabra_j1 = self.transforma_a_lineas(self.palabra_actual) #Es cuantas posiciones tendra nuestra palabra
-        self.progreso_palabra_j2 = self.progreso_palabra_j1
+        self.progreso_palabra_j2 = self.transforma_a_lineas(self.palabra_actual)
 
     # Función que regresa una lista con las apariciones de una letra en una cadena.
     def apariciones_letra(self, cadena, letra):
@@ -130,6 +130,9 @@ class Jugada_actual:
     jugador_turno:int #Variable que indica que jugador le toca tirar, valores 1,2
 
     jugador_turno = 1
+    estado_jugador1 = "continua"
+    estado_jugador2 = "continua"
+    estado_partida = "continua"
 
     def agrega_jugador(self,jugador):
         self.jugadores.append(jugador)

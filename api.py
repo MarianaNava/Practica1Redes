@@ -10,7 +10,7 @@ cookie_jar = []
 #async def root():
 #    return {"message": "Bienvenido a Ahorcado multijugador!"}
 
-#@app.post("/sign_up")
+
 def sign_up(username, password): #Primero registrate para que pueda crear la cookie
     user = users.get(username)
     if user:
@@ -28,7 +28,7 @@ def sign_up(username, password): #Primero registrate para que pueda crear la coo
     cookie_jar.append(new_cookie)
     return {"message": "User registered successfully", "cookie_id": cookie_id }
 
-#@app.post("/sign_in")
+
 def sign_in(cookie): #Una vez registrado ya solo necesitamos la cookie para saber quien es y validarlo
     
     user = ""
@@ -42,7 +42,7 @@ def sign_in(cookie): #Una vez registrado ya solo necesitamos la cookie para sabe
   
     return {"message": "Not Found User"}
 
-#@app.get("/jugada")
+
 def jugada(letra:None):
     #Estado posible para el mensaje de regreso:
     #{
