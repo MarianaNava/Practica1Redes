@@ -12,7 +12,7 @@ def socket_sign_up():
     mensajejson = json.dumps(dictmensaje)
     clientSocket.sendto(mensajejson.encode(),(serverName, serverPort)) # encode para pasarlo a una secuencia de bytes
     respuesta, serverAddress = clientSocket.recvfrom(2048)
-    mensaje_respuesta = json.loads(respuesta) #Debe responde algo de tipo {"messaje": ... , "cookie":...}
+    mensaje_respuesta = json.loads(respuesta) #Debe responde algo de tipo {"message": ... , "cookie":...}
     clientSocket.close()
     return mensaje_respuesta 
 
@@ -22,27 +22,28 @@ def socket_sign_in(cookie):
     mensajejson = json.dumps(dictmensaje)
     clientSocket.sendto(mensajejson.encode(),(serverName, serverPort)) # encode para pasarlo a una secuencia de bytes
     respuesta, serverAddress = clientSocket.recvfrom(2048)
-    mensaje_respuesta = json.loads(respuesta) #Debe responde algo de tipo {"messaje": ... }
+    mensaje_respuesta = json.loads(respuesta) #Debe responde algo de tipo {"message": ... }
     clientSocket.close()
     return mensaje_respuesta 
 
-def socket_ahorcado_inicial():
-    dictmensaje = dict(tipo=2)
-    mensajejson = json.dumps(dictmensaje)
-    clientSocket.sendto(mensajejson.encode(),(serverName, serverPort)) # encode para pasarlo a una secuencia de bytes
-    respuesta, serverAddress = clientSocket.recvfrom(2048)
-    mensaje_respuesta = json.loads(respuesta) #Debe responde algo de tipo {"messaje": ... }
-    clientSocket.close()
-    return mensaje_respuesta 
+#def socket_ahorcado_inicial():
+#    dictmensaje = dict(tipo=2)
+#    mensajejson = json.dumps(dictmensaje)
+#    clientSocket.sendto(mensajejson.encode(),(serverName, serverPort)) # encode para pasarlo a una secuencia de bytes
+#    respuesta, serverAddress = clientSocket.recvfrom(2048)
+#    mensaje_respuesta = json.loads(respuesta) #Debe responde algo de tipo {"message": ... }
+#    clientSocket.close()
+#    return mensaje_respuesta 
 
-def socket_movimiento():
-    movimiento = input('Dame una letra: ')
-    dictmensaje = dict(movimiento= movimiento,tipo=3)
+def socket_letra():
+    letra = input('Dame una letra: ')
+    dictmensaje = dict(letra= letra,tipo=2)
     mensajejson = json.dumps(dictmensaje)
     clientSocket.sendto(mensajejson.encode(),(serverName, serverPort)) # encode para pasarlo a una secuencia de bytes
     respuesta, serverAddress = clientSocket.recvfrom(2048)
-    mensaje_respuesta = json.loads(respuesta) #Debe responde algo de tipo {"messaje": ... , "cookie":...}
-    clientSocket.close()
+    mensaje_respuesta = json.loads(respuesta) #Debe responde algo de tipo {"message": ... , "juego":...}
+    if mensaje_respuesta["message"]=="Finalizado":
+        clientSocket.close()
     return mensaje_respuesta 
 
 
@@ -132,9 +133,9 @@ def __main__():
     succesful_sign_in = peticion_sign_in["message"]
     print(succesful_sign_in)
     if succesful_sign_in == "Successful loggin":
-        peticion_ai= socket_ahorcado_inicial()
-        if peticion_ai["message"]=="Jugador 1":
-            jugador1= peticion_ai["jugador1"]
+        peticion_a= socket_letra()
+        if peticion_a["message"]=="Jugador 1":
+            jugador1= peticion_a["jugador1"]
             username1 = jugador1["username"]
             progreso1 = jugador1["progreso"]
             errores = jugador1["errores"]
@@ -142,7 +143,7 @@ def __main__():
             print("Hola Jugador 1: "+username1)
             print("Tu progreso actual es : "+ progreso1)
             print("Colgado actual"+colgado)
-            socket_movimiento()
+            pon_letra = socket_letra()
 
             
 

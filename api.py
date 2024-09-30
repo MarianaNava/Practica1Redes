@@ -9,6 +9,7 @@ cookie_jar = []
 #@app.get("/")
 #async def root():
 #    return {"message": "Bienvenido a Ahorcado multijugador!"}
+jugada_actual= Jugada_actual()
 
 
 def sign_up(username, password): #Primero registrate para que pueda crear la cookie
@@ -35,15 +36,16 @@ def sign_in(cookie): #Una vez registrado ya solo necesitamos la cookie para sabe
     for galletita in cookie_jar:
         if cookie == galletita["cookie_id"]:
             username = galletita["username"]
-            Jugada_actual.agrega_jugador(username)
             #hacer redirect con estado inicial del juego
+            jugada_actual = Jugada_actual() #Iniciamos la jugada
+            jugada_actual.agrega_jugador(username)
              
             return{"message": "Successful loggin"}
   
     return {"message": "Not Found User"}
 
 
-def jugada(letra:None):
+def jugada_estado(letra= ""):
     #Estado posible para el mensaje de regreso:
     #{
     # "juego": {
@@ -63,13 +65,14 @@ def jugada(letra:None):
     # "estado_partida": finalizada, continua, no_disponible
     # }
     #}
-    jugada_actual = Jugada_actual() 
-    datos_jugador1 = jugada_actual["juego"]["jugador1"]
-    datos_jugador2 = jugada_actual["juego"]["jugador2"]
+    
+    
     if jugada_actual["estado_partida"] == "no_disponible":
-        return {"message": "no_disponible"}
+        return {"message": "No_disponible"}
     
     elif jugada_actual["estado_partida"] == "finalizada":
+        datos_jugador1 = jugada_actual["juego"]["jugador1"]
+        datos_jugador2 = jugada_actual["juego"]["jugador2"]
 
         if(datos_jugador1["estado"]=="perdedor" and datos_jugador2["estado"]=="perdedor"):
             return {"message":"Perdida"}
@@ -82,8 +85,14 @@ def jugada(letra:None):
             username = datos_jugador2["username"]
             return {"message": "Ganador2", "username":username}
         
-    else: #la partida continua 
-        return {"message":"Continua","jugador1": datos_jugador1,"jugador2": datos_jugador2}
+    else: #la partida continua ie. jugada_actual["estado_partida"]=="continua"
+        #Si tenemos una accion a realizar, la realizamos 
+        if len(letra)>0:
+            jugada = jugada_actual.jugada(letra)
+            juego_actual = jugada["juego"] #siempre nos regresan algo de tipo juego con el estado del juego actual, turno siguiente y los valores de los jugadores
+        return {"message":"Continua","juego": juego_actual}
+    
+
     
     
 

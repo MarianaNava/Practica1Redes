@@ -24,25 +24,49 @@ while True:
         sign_in = sign_in(cookie)
         respuesta = dict(message = sign_in.get('message'))
         serverSocket.sendto(json.dumps(respuesta).encode(),clientAddress)
-    elif tipo_request == 2: 
-
         lista_clientes.append(clientAddress)
-        inicia_partido = jugada() #regresa algo con un message
+    elif tipo_request == 2: 
+        letra = paquete["letra"]
+        partido = jugada_estado(letra) #iniciamos la partida,jugada_estado es de api, puede regresar partida no_disponible, finalizada o continua
+        #cachamos el mensaje.
+        mensaje = partido["message"]
+        if mensaje == "Continua":
+            partido_juego = partido["juego"]
+            jugador1 = partido_juego["jugador1"]
+            jugador2 = partido_juego["jugador2"]
+            siguiente_jugador = partido["siguiente_jugador"]
+            for i in range(2):
+                clientAddress = lista_clientes[i] #Quien primero hizo log in esta agregado en la lista de clientes y a su vez se agrega primero a la lista de jugadores
 
-        jugador1 = inicia_partido["jugador1"]
-        jugador2 = inicia_partido["jugador2"]
-        
-        for i in range(2):
-            clientAddress = lista_clientes[i]
-            if i == 0:
-                mensaje = "Jugador 1"
-                respuesta = dict(message= mensaje,jugador1= jugador1,jugador2= jugador2)
-                serverSocket.sendto(json.dumps(respuesta).encode(), clientAddress)
-            else:
-                mensaje = "Jugador 2"
-                respuesta = dict(message= mensaje,jugador1= jugador1,jugador2= jugador2)
-                serverSocket.sendto(json.dumps(respuesta).encode(), clientAddress)
-                
+                if i == 0:
+                    mensaje = "Jugador 1"
+                    respuesta = dict(message= mensaje,jugador1 = jugador1,jugador2= jugador2, siguiente_jugador = siguiente_jugador)
+                    serverSocket.sendto(json.dumps(respuesta).encode(), clientAddress)
+
+                else:
+                    mensaje = "Jugador 2"
+                    respuesta = dict(message= mensaje,jugador1= jugador1,jugador2= jugador2, siguiente_jugador = siguiente_jugador)
+                    serverSocket.sendto(json.dumps(respuesta).encode(), clientAddress)
+
+        elif mensaje == "Perdida":
+            respuesta = dict(message = "Ambos perdieron T_T")
+            serverSocket.sendto(json.dumps(respuesta).encode(), clientAddress)
+
+        elif mensaje == "Empate":
+            respuesta = dict(message = "Es un empate!")
+            serverSocket.sendto(json.dumps(respuesta).encode(), clientAddress)
+
+        elif mensaje == "Ganador1":
+            username = partido["username"]
+            respuesta = dict("Gano el usuario:" + username)
+
+        elif mensaje == "Ganador2":
+            username = partido["username"]
+            respuesta = dict("Gano el usuario:" + username)
+
+
+
+
 
 
 
