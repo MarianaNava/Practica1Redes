@@ -61,7 +61,7 @@ Ejemplo:
         "progreso": "_ i a _ o",
         "errores": 2
     },
-    "siguiente_jugador": "juan" (no se si poner username o numero aqui),
+    "siguiente_jugador": "juan",
     "estado_partida": "continua"
     }
 }
