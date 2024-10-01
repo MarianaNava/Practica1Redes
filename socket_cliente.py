@@ -4,7 +4,7 @@ import json
 serverName = 'localhost' # 127.0.0.1 (referencia a mi misma maquina)
 serverPort = 12000
 clientSocket = socket(AF_INET, SOCK_DGRAM) # SOCK_DGRAM para decir que vamos a usar UDP
-print("hello")
+print("Bienvenido al juego de ahorcado :)")
 
 # Función para realizar la comunicación hacia el servidor enviando un mensaje para empezar con un registro de la sesión.
 def socket_sign_up():
