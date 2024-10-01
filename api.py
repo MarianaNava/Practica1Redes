@@ -9,7 +9,7 @@ cookie_jar = []
 def sign_up(username, password): #Primero registrate para que pueda crear la cookie
     user = users.get(username)
     if user:
-        return{"message": "User alredy exist"}
+        return{"message": "User already exists"}
     
     new_user_id = len(users) + 1
     new_user = {
@@ -33,7 +33,7 @@ def sign_in(cookie): #Una vez registrado ya solo necesitamos la cookie para sabe
             jugada_actual = Jugada_actual() #Iniciamos la jugada
             jugada_actual.agrega_jugador(username)
              
-            return{"message": "Successful loggin"}
+            return{"message": "Successful login"}
   
     return {"message": "Not Found User"}
 
