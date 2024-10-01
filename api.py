@@ -54,7 +54,6 @@ def jugada_estado(letra= ""):
     instance_jugada_actual= Jugada_actual() #se guarda el mensaje inicial()
     jugada_actual = lee_juego_actual()
     instance_jugada_actual.sobreescribir_juego(jugada_actual)
-    print(jugada_actual)
     if jugada_actual['juego']["estado_partida"] == "no disponible":
         return {"message": "No_disponible"}
     

@@ -4,7 +4,6 @@ from api import *
 
 serverPort = 12000
 serverSocket = socket(AF_INET, SOCK_DGRAM)
-print("1")
 serverSocket.bind(('', serverPort)) # '' toma como default el localhost
 print('El servidor está listo')
 lista_clientes = []
@@ -27,7 +26,7 @@ while True:
         respuesta = dict(message = instance.get('message'))
         serverSocket.sendto(json.dumps(respuesta).encode(),clientAddress)
         lista_clientes.append(clientAddress)
-    elif tipo_request == 2: 
+    elif tipo_request == 2: # Movimiento de partida.
         letra = paquete["letra"]
         partido = jugada_estado(letra) #iniciamos la partida,jugada_estado es de api, puede regresar partida no_disponible, finalizada o continua
         #cachamos el mensaje.
@@ -68,7 +67,7 @@ while True:
             respuesta = dict(message ="Gano el usuario:" + username)
             serverSocket.sendto(json.dumps(respuesta).encode(), clientAddress)
 
-        else: #No disponible
+        else: #Caso en que es No disponible
             respuesta = dict(message = "No suficientes usuarios :( ")
             serverSocket.sendto(json.dumps(respuesta).encode(), clientAddress)
 
