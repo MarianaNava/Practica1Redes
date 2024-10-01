@@ -2,11 +2,12 @@ from socket import *
 import json
 import random
 
-
+# Clase que almacena la información esencial para el juego de ahorcado.
 class Juego_ahorcado:
 
     # Lógica del juego Ahorcado.
 
+    # Palabras disponibles para adivinar.
     banco_de_palabras = ["cielo", "burbuja", "caracol", "piano", "aspiradora", "mariposa",
                         "pavo", "caramelo", "banjo", "flor", "perfume", "llama",
                         "bicicleta", "estrella", "guitarra", "microscopio", "rompecabezas",
@@ -34,6 +35,7 @@ class Juego_ahorcado:
         self.progreso_palabra_j1 = self.transforma_a_lineas(self.palabra_actual) #Es cuantas posiciones tendra nuestra palabra
         self.progreso_palabra_j2 = self.transforma_a_lineas(self.palabra_actual)
 
+    # Función para cambiar los valores de los atributos de la clase.
     def set_juego(self, palabra, errores_j1,errores_j2,progreso_palabra_j1,progreso_palabra_j2):
         self.palabra_actual = palabra
         self.errores_j1 = errores_j1
@@ -41,6 +43,7 @@ class Juego_ahorcado:
         self.progreso_palabra_j1 = progreso_palabra_j1
         self.progreso_palabra_j2 = progreso_palabra_j2
 
+    # Getter de la palabra que queremos adivinar.
     def secreto(self):
         return self.palabra_actual
 
@@ -76,7 +79,7 @@ class Juego_ahorcado:
 
 
 
-
+# Clase que almacena la información de una jugada específica.
 class Jugada_actual:
     # Lista de jugadores involucrados en la partida actual
     jugadores = []
@@ -87,8 +90,6 @@ class Jugada_actual:
     estado_jugador2 = "continua"
     estado_partida = "continua"
 
-    #partida_estado_actual:dict
-
     mensaje_inicial = ""
 
     #Función que guarda el estado actual de la partida, donde esta se describe en forma de diccionario
@@ -96,6 +97,7 @@ class Jugada_actual:
         with open("solucion.txt", "w") as myfile:
             myfile.write(str(estado_actual))
 
+    # Función que cambia el estado actual de la jugada, recuperando información almacenada en data_game
     def sobreescribir_juego(self, data_game:dict):
         juego = data_game["juego"]
         jugador1 = juego["jugador1"]
@@ -114,9 +116,11 @@ class Jugada_actual:
         self.estado_jugador2 = jugador2["estado"]
         self.estado_partida = juego["estado_partida"]
 
+    # Función para agregar un jugador a la lista de jugadores.
     def agrega_jugador(self,jugador):
         self.jugadores.append(jugador)
 
+    # Getter para la lista de jugadores.
     def obten_jugadores(self):
         return self.jugadores
 
@@ -165,7 +169,8 @@ class Jugada_actual:
                         }
             self.mensaje_inicial["secreto"]= self.juego.secreto()
             self.guarda_estado(self.mensaje_inicial)
-        
+    
+    # Getter del mensaje con el que comienza el juego.
     def dar_mensaje_inicial(self):
         return self.mensaje_inicial
     
@@ -213,10 +218,3 @@ class Jugada_actual:
                     }
         self.guarda_estado(estado_juego) #Se esta sobreescribiendo constantemente para guardar la solución actual
         return estado_juego
-
-            
-            
-
-    # Persistencia de la partida.
-
-    # Código ...
