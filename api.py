@@ -1,16 +1,11 @@
-#from fastapi import FastAPI
 import secrets
 from juego_ahorcado import Jugada_actual
 import ast
 
-#app = FastAPI()
-
 users = {} #almacena los usuarios, quien sabe si lo ocupemos.
 cookie_jar = []
-#@app.get("/")
-#async def root():
-#    return {"message": "Bienvenido a Ahorcado multijugador!"}
 
+# Función para darle a un usuario la cookie al registrarse.
 def sign_up(username, password): #Primero registrate para que pueda crear la cookie
     user = users.get(username)
     if user:
@@ -28,14 +23,13 @@ def sign_up(username, password): #Primero registrate para que pueda crear la coo
     cookie_jar.append(new_cookie)
     return {"message": "User registered successfully", "cookie_id": cookie_id }
 
-
+# Función para hacer el registro del usuario.
 def sign_in(cookie): #Una vez registrado ya solo necesitamos la cookie para saber quien es y validarlo
     
     user = ""
     for galletita in cookie_jar:
         if cookie == galletita["cookie_id"]:
             username = galletita["username"]
-            #hacer redirect con estado inicial del juego
             jugada_actual = Jugada_actual() #Iniciamos la jugada
             jugada_actual.agrega_jugador(username)
              
@@ -50,6 +44,12 @@ def lee_juego_actual():
         estado = ast.literal_eval(estado)
     return estado
 
+# Función para determinar el estado en el que se encuentra la jugada:
+#   No disponible: no hay suficientes usuarios.
+#   Perdida: Ambos jugadores perdieron
+#   Empate: Ambos jugadores ganaron.
+#   Ganador1: El jugador 1 ganó la partida.
+#   Ganador2: El jugador 2 ganó la partida.
 def jugada_estado(letra= ""):
     instance_jugada_actual= Jugada_actual() #se guarda el mensaje inicial()
     jugada_actual = lee_juego_actual()
